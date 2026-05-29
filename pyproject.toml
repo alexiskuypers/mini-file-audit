@@ -5,7 +5,12 @@ description = "Python CLI tool that scans a local folder and generates a CSV fil
 requires-python = ">=3.12"
 dependencies = []
 
+[project.scripts]
+mini-file-audit = "mini_file_audit.cli:main"
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages.find]
+where = ["src"]
