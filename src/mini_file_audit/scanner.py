@@ -1,27 +1,38 @@
 from pathlib import Path
 
-def scan_folder (
-    folder: Path, recursive: bool = False, 
-    extensions: list[str] | None = None, 
-    include_hidden: bool = False, 
+
+def is_hidden_path(path: Path, root: Path) -> bool:
+    relative_path = path.relative_to(root)
+
+    return any(
+        part.startswith(".")
+        for part in relative_path.parts
+    )
+
+
+def scan_folder(
+    folder: Path,
+    recursive: bool = False,
+    extensions: list[str] | None = None,
+    include_hidden: bool = False,
     max_size: int | None = None
-)-> list[Path] : 
-    files = [] 
-    if recursive: 
+) -> list[Path] :
+    files = []
+    if recursive:
         items = folder.rglob("*")
-    else :
-        items = folder.iterdir()    
+    else:
+        items = folder.iterdir()
     for path in items:
-        if not path.is_file() :
+        if not path.is_file():
             continue
-        if not include_hidden and path.name.startswith("."):
+        if not include_hidden and is_hidden_path(path, folder):
             continue
-        if extensions is not None and path.suffix not in extensions : 
+        if extensions is not None and path.suffix not in extensions:
             continue
-        try : 
+        try:
             if max_size is not None and path.stat().st_size > max_size:
                 continue
-        except OSError: 
+        except OSError:
             continue
         files.append(path)
     return sorted(files)
