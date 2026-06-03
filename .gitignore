@@ -1,7 +1,7 @@
-  GNU nano 7.2                       Nouvel espace *                               
+  GNU nano 7.2                       Nouvel espace *
 .venv/
 output/
 __pycache__/
 logs/
 *.pyc
-
+src/*.egg-info/
