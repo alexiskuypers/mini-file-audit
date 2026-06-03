@@ -80,7 +80,7 @@ def normalize_extensions(extensions: list[str] | None) -> list[str] | None:
     for extension in extensions:
         extension = extension.strip().lower()
 
-        if extension in {"","."}:
+        if extension in {"",".",","}:
             raise CliInputError(f"Invalid extension: {extension!r}")
 
         if not extension.startswith("."):
@@ -89,8 +89,6 @@ def normalize_extensions(extensions: list[str] | None) -> list[str] | None:
         normalized_extensions.append(extension)
 
     return sorted(set(normalized_extensions))
-
-
 
 
 def main() -> int:
