@@ -5,6 +5,9 @@ description = "Python CLI tool that scans a local folder and generates a CSV fil
 requires-python = ">=3.12"
 dependencies = []
 
+[project.optional-dependencies]
+dev = ["pytest"]
+
 [project.scripts]
 mini-file-audit = "mini_file_audit.cli:main"
 
