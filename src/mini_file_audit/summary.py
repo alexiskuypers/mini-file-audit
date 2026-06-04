@@ -1,5 +1,9 @@
 from pathlib import Path
 from collections import Counter
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 NO_EXTENSION = "no_extension"
 
@@ -20,16 +24,16 @@ def summarize_extensions(files: list[Path])-> dict[str,object]:
         "extension_count":extension_count,
         "files_by_extension":sorted_files_by_extension,
     }
-        
-def summarize_sizes (files: list[Path])-> dict[str, object]: 
+
+def summarize_sizes (files: list[Path])-> dict[str, object]:
     total_files = len(files)
     total_size_bytes = sum(path.stat().st_size for path in files)
-    
+
     if total_files > 0:
         average_file_size_bytes = total_size_bytes / total_files
-    else : 
+    else :
         average_file_size_bytes = 0
-    if files: 
+    if files:
         largest_path = max(files, key= lambda path: path.stat().st_size)
         largest_file = {
             "name": largest_path.name,
@@ -45,7 +49,7 @@ def summarize_sizes (files: list[Path])-> dict[str, object]:
     else :
         largest_file = None
         smallest_file = None
-    
+
     empty_files_count = sum(1 for path in files if path.stat().st_size == 0)
 
     return {
@@ -58,15 +62,17 @@ def summarize_sizes (files: list[Path])-> dict[str, object]:
     }
 
 def build_summary(
-        files: list[Path], 
-        recursive: bool, 
-        csv_output: Path, 
+        files: list[Path],
+        recursive: bool,
+        csv_output: Path,
         json_output: Path
 )-> dict [str, object]:
     csv_report_path = str(csv_output)
     summary_report_path = str(json_output)
+
     sizes_data = summarize_sizes(files)
     extensions_data = summarize_extensions(files)
+
     summary = {
         **sizes_data,
         **extensions_data,
@@ -74,4 +80,10 @@ def build_summary(
         "csv_report_path": csv_report_path,
         "summary_report_path": summary_report_path,
     }
+
+    logger.info(
+    "Summary built: %s files, %s extensions",
+    summary["total_files"],
+    summary["extension_count"],
+    )
     return summary

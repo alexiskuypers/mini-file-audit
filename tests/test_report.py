@@ -38,9 +38,3 @@ def test_write_summary_report_output(tmp_path):
     assert result == json_output
     assert json_output.exists()
     assert data == summary
-
-
-
-
-
-

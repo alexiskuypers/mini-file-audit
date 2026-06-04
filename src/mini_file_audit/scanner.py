@@ -1,4 +1,8 @@
 from pathlib import Path
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def is_hidden_path(path: Path, root: Path) -> bool:
@@ -18,6 +22,8 @@ def scan_folder(
     max_size: int | None = None
 ) -> list[Path] :
     files = []
+    logger.info("scan start for folder: %s", folder)
+
     if recursive:
         items = folder.rglob("*")
     else:
@@ -33,6 +39,16 @@ def scan_folder(
             if max_size is not None and path.stat().st_size > max_size:
                 continue
         except OSError:
+            logger.warning("file can't be inspected, skip: %s", path)
             continue
         files.append(path)
-    return sorted(files)
+    selected_files = sorted(files)
+
+    if not selected_files:
+        logger.warning("No files selected from folder: %s", folder)
+
+    logger.info("scanner folder: %s, validates, files selected: %s",
+                folder,
+                len(files)
+            )
+    return selected_files

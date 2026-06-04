@@ -23,7 +23,6 @@ def run_audit(
     )
     write_csv_report(files, csv_output)
 
-
     summary = build_summary(
         files,
         recursive=recursive,

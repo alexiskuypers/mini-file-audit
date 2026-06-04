@@ -1,7 +1,12 @@
 from pathlib import Path
 import argparse
-from mini_file_audit.main import run_audit
+import logging
 
+from mini_file_audit.main import run_audit
+from mini_file_audit.logging_config import configure_logging
+
+
+logger = logging.getLogger(__name__)
 
 class CliInputError(Exception):
     """Raised when CLI input is invalid or unusable."""
@@ -92,6 +97,9 @@ def normalize_extensions(extensions: list[str] | None) -> list[str] | None:
 
 
 def main() -> int:
+    configure_logging()
+    logger.info("Audit command started")
+
     parser = create_parser()
     args = parser.parse_args()
 
@@ -111,12 +119,15 @@ def main() -> int:
         )
     except CliInputError as error:
         print(f"Error: {error}")
+        logger.error("CliInputError : %s", error)
         return 1
     except OSError as error:
         print(f"Error: {error}")
+        logger.error("Oserror : %s", error)
         return 1
 
     print_summary(summary)
+    logger.info("Audit command completed successfully")
     return 0
 
 
