@@ -18,8 +18,3 @@ def configure_logging() -> None:
     )
 
 
-def main() -> None:
-    configure_logging()
-    logging.info("start audit")
-    logger = logging.getLogger(__name__)
-
