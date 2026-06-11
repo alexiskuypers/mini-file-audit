@@ -37,7 +37,7 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--recursive",
         action="store_true",
-        help="add recursivity in scan"
+        help="Enable recursive scan"
         )
 
     parser.add_argument(
@@ -50,13 +50,13 @@ def create_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--include-hidden",
         action="store_true",
-        help="True add include hidden")
+        help="Include hidden files")
 
     parser.add_argument(
         "--max-size",
         type=int,
         default=None,
-        help="maximal files syze in bytes")
+        help="Maximum file size in bytes")
 
     return parser
 
