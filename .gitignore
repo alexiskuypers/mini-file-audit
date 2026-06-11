@@ -1,8 +1,11 @@
-                    Nouvel espace *
 .venv/
-output/
 __pycache__/
-logs/
 *.pyc
-src/*.egg-info/
+.pytest_cache/
+*.egg-info/
+
+output/
+logs/
 *.log
+
+.DS_Store
