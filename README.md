@@ -96,7 +96,7 @@ mini-file-audit --help
 
 ```txt
 Files found: 3
-Total size: 1240 bytes
+Total size: 37 bytes
 CSV report: output/report.csv
 Summary report: output/summary.json
 ```
